@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>GSU Athlete Form</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 d-sm-none d-md-block"></div>
+            <div class="col-sm-8 col-12 px-2">
+                <div class="card w-100 mt-4">
+                    <div class="card-body">
+                        <h1 class="card-title">GSU Athlete Health Tracker</h1>
+                        <h6 class="card-subtitle mb-2 text-muted mb-3">Provide as much feedback as you can.</h6>
+                        <form method="POST" action="/new">
+                            <div class="form-group">
+                                <label for="coach-selector">Who is your coach?<span class="text-danger">*</span></label>
+                                <select class="form-control mb-4" name="coach" id="coach-selector" required>
+                                    <option value="" disabled selected>Select your coach</option>
+                                    <% coaches.forEach(function(coach){ %>
+                                        <option value='<%= coach.id %>'>
+                                            <% if(!coach.firstName && !coach.lastName) { %> 
+                                                <%= coach.username %>
+                                            <% } else { %> 
+                                                <%= coach.firstName %> <%= coach.lastName %>
+                                            <% } %> 
+                                        </option>
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="form-group col-6">
+                                    <label for="firstName">First Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name" required>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="lastName">Last Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="water-amount">How much water have you had today?</label>
+                                <select class="form-control mb-4" name="waterScore" id="water-amount">
+                                    <% waterOptions.forEach(function(option){ %>
+                                        <option value='<%= option.value %>'>
+                                            <%= option.displayText %>
+                                        </option>
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button class="btn btn-link text-danger" onclick="document.querySelector('form').reset();">Clear</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 d-sm-none d-md-block"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

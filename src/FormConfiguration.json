@@ -1,0 +1,8 @@
+{
+    "waterOptions": [
+        { "value": 0, "displayText": "None" },
+        { "value": 1, "displayText": "A glass or two" },
+        { "value": 2, "displayText": "At least a gallon" },
+        { "value": 3, "displayText": "More than a gallon." }
+    ]
+}
