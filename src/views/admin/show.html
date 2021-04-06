@@ -108,6 +108,80 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="pt-4 col-md-4 col-12 px-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Add Question</h5>
+                                    <hr>
+                                    <p class="card-text">Adds a new question to the Student Form</p>
+                                    <form method="POST" action="/healthtracking/question">
+                                        <div class="form-group">
+                                            <label for="question">Question Label:</label>
+                                            <input type="text" name="questionLabel" class="form-control"
+                                                id="usernameInput" placeholder="Label"
+                                                required>
+                                        </div>
+                                        <button type="submit" class="mt-4 btn btn-success">Add</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-4 col-md-4 col-12 px-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Add Option</h5>
+                                    <hr>
+                                    <p class="card-text">Adds an option to the specified Question</p>
+                                    <form method="POST" action="/healthtracking/option">
+                                        <div class="form-group">
+                                            <label>Question</label>
+                                            <select class="form-control mb-4" name="selectedQuestion">
+                                                <% questions.forEach(function(question){ %>
+                                                    <option value='<%= question.id %>'>
+                                                        <%= question.label %>
+                                                    </option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="question">Option Display Text:</label>
+                                            <input type="text" name="optionDisplayText" class="form-control"
+                                                id="usernameInput" placeholder="Label"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="question">Option Value:</label>
+                                            <input type="number" name="optionValue" class="form-control"
+                                                id="usernameInput" placeholder="Label"
+                                                required>
+                                        </div>
+                                        <button type="submit" class="mt-4 btn btn-success">Add</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-4 col-md-4 col-12 px-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Delete a question</h5>
+                                    <hr>
+                                    <p class="card-text">Adds an option to the specified Question</p>
+                                    <form method="POST" action="/healthtracking/question/delete">
+                                        <div class="form-group">
+                                            <label>Question</label>
+                                            <select class="form-control mb-4" name="selectedQuestion">
+                                                <% questions.forEach(function(question){ %>
+                                                    <option value='<%= question.id %>'>
+                                                        <%= question.label %>
+                                                    </option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="mt-4 btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

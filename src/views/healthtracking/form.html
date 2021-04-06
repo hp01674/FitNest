@@ -45,16 +45,18 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="water-amount">How much water have you had today?</label>
-                                <select class="form-control mb-4" name="waterScore" id="water-amount">
-                                    <% waterOptions.forEach(function(option){ %>
-                                        <option value='<%= option.value %>'>
-                                            <%= option.displayText %>
-                                        </option>
-                                    <% }) %>
-                                </select>
-                            </div>
+                            <% questions.forEach(function(question, index){%>
+                                <div class="form-group">
+                                    <label><%= question.label %></label>
+                                    <select class="form-control mb-4" name="question<%= index %>">
+                                        <% question.options.forEach(function(option){ %>
+                                            <option value='<%= option.value %>'>
+                                                <%= option.displayText %>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            <% }) %>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button class="btn btn-link text-danger" onclick="document.querySelector('form').reset();">Clear</button>

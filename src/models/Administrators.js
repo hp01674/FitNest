@@ -1,7 +1,7 @@
 const {
     Connection,
     Request
-} = require("tedious");
+} = require('tedious');
 const DatabaseConfiguration = require('./DatabaseConfiguration.json');
 const bcrypt = require('bcrypt');
 
@@ -11,7 +11,7 @@ const config = {
             userName: DatabaseConfiguration.userName,
             password: DatabaseConfiguration.password
         },
-        type: "default"
+        type: 'default'
     },
     server: DatabaseConfiguration.server,
     options: {
@@ -25,7 +25,7 @@ class Administrators {
     constructor() {}
 
     static login(admin) {
-        let result = undefined;
+        let result;
         const deferred = q.defer();
         const connection = new Connection(config);
 
@@ -38,7 +38,7 @@ class Administrators {
             });
 
             request.on('row', async (columns) => {
-                const password = admin.password;
+                const {password} = admin;
                 const hash = columns[2].value;
                 const match = await bcrypt.compare(password, hash);
  
@@ -55,7 +55,7 @@ class Administrators {
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve(result);
         });
@@ -77,16 +77,16 @@ class Administrators {
                     }
                 });
 
-                request.on("doneProc", () => {
+                request.on('doneProc', () => {
                     deferred.resolve(true);
-                })
+                });
 
                 connection.execSql(request);
             });
 
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve(false);
         });

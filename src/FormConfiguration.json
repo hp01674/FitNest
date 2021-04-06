@@ -1,8 +1,24 @@
 {
-    "waterOptions": [
-        { "value": 0, "displayText": "None" },
-        { "value": 1, "displayText": "A glass or two" },
-        { "value": 2, "displayText": "At least a gallon" },
-        { "value": 3, "displayText": "More than a gallon." }
+    "questions": [
+        {
+            "name": "water-score",
+            "label": "How much water have you had today?",
+            "options": [
+                { "value": 0, "displayText": "None" },
+                { "value": 1, "displayText": "A glass or two" },
+                { "value": 2, "displayText": "At least a gallon" },
+                { "value": 3, "displayText": "More than a gallon." }
+            ]
+        },
+        {
+            "name": "exercise-score",
+            "label": "How much exercise have you gotten today?",
+            "options": [
+                { "value": 0, "displayText": "None" },
+                { "value": 1, "displayText": "10-15 minutes" },
+                { "value": 2, "displayText": "30 - 45 minutes" },
+                { "value": 3, "displayText": "More than 45 minutes" }
+            ]
+        }
     ]
 }

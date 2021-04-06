@@ -1,7 +1,7 @@
 const {
     Connection,
     Request
-} = require("tedious");
+} = require('tedious');
 const DatabaseConfiguration = require('./DatabaseConfiguration.json');
 const bcrypt = require('bcrypt');
 
@@ -11,7 +11,7 @@ const config = {
             userName: DatabaseConfiguration.userName,
             password: DatabaseConfiguration.password
         },
-        type: "default"
+        type: 'default'
     },
     server: DatabaseConfiguration.server,
     options: {
@@ -31,7 +31,7 @@ class Coaches {
 
         connection.on('connect', function (err) {
             if (err) console.log(err);
-            const request = new Request(`SELECT ID, FirstName, LastName, Username FROM Coaches`, function (err, rowCount) {
+            const request = new Request('SELECT ID, FirstName, LastName, Username FROM Coaches', function (err, rowCount) {
                 if (err) console.log(err);
             });
 
@@ -44,14 +44,14 @@ class Coaches {
                 });
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve(result);
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
         });
 
@@ -72,14 +72,14 @@ class Coaches {
                 deferred.resolve(columns[0].value);
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve(result);
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
         });
 
@@ -87,7 +87,7 @@ class Coaches {
     }
 
     static login(coach) {
-        let result = undefined;
+        let result;
         const deferred = q.defer();
         const connection = new Connection(config);
 
@@ -101,7 +101,7 @@ class Coaches {
             });
 
             request.on('row', async (columns) => {
-                const password = coach.password;
+                const {password} = coach;
                 const hash = columns[4].value;
                 const match = await bcrypt.compare(password, hash);
 
@@ -121,7 +121,7 @@ class Coaches {
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve(result);
         });
@@ -143,16 +143,16 @@ class Coaches {
                     }
                 });
 
-                request.on("doneProc", () => {
+                request.on('doneProc', () => {
                     deferred.resolve(true);
-                })
+                });
 
                 connection.execSql(request);
             });
 
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve(false);
         });
@@ -175,7 +175,7 @@ class Coaches {
                 }
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve({
                     id: coachId,
                     firstName: coach.firstName,
@@ -183,12 +183,12 @@ class Coaches {
                     sport: coach.sport,
 
                 });
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve();
         });
@@ -210,14 +210,14 @@ class Coaches {
                 deferred.resolve();
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve();
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
         });
 

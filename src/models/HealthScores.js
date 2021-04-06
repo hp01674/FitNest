@@ -1,4 +1,4 @@
-const { Connection, Request } = require("tedious");
+const { Connection, Request } = require('tedious');
 const DatabaseConfiguration = require('./DatabaseConfiguration.json');
 
 const config = {
@@ -7,7 +7,7 @@ const config = {
         userName: DatabaseConfiguration.userName,
         password: DatabaseConfiguration.password
       },
-      type: "default"
+      type: 'default'
     },
     server: DatabaseConfiguration.server,
     options: {
@@ -24,7 +24,7 @@ class HealthScores {
         const deferred = q.defer();
         const connection = new Connection(config);
         connection.on('connect', function (err) {
-            const query = `INSERT INTO HealthScores (CoachID, FirstName, LastName, Score) VALUES (${healthScore.coach}, '${healthScore.firstName}', '${healthScore.lastName}', ${healthScore.score})`
+            const query = `INSERT INTO HealthScores (CoachID, FirstName, LastName, Score) VALUES (${healthScore.coach}, '${healthScore.firstName}', '${healthScore.lastName}', ${healthScore.score})`;
 
             console.log(query);
             const request = new Request(query, function (err, rowCount) {
@@ -34,18 +34,18 @@ class HealthScores {
                 }
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve(true);
             });
 
-            request.on("done", () =>{
+            request.on('done', () =>{
                 deferred.resolve(true);
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve(false);
         });
@@ -72,19 +72,19 @@ class HealthScores {
                     firstName: columns[2].value,
                     lastName: columns[3].value,
                     score: columns[4].value,
-                    date: date.toLocaleDateString("en-us")
+                    date: date.toLocaleDateString('en-us')
                 });
             });
 
-            request.on("doneProc", () => {
-                const byDate = (a, b) => { b.date - a.date };
+            request.on('doneProc', () => {
+                const byDate = (a, b) => { b.date - a.date; };
                 deferred.resolve(result.sort(byDate));
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
         });
 
@@ -106,14 +106,14 @@ class HealthScores {
                 deferred.resolve();
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve();
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
         });
 
@@ -132,22 +132,22 @@ class HealthScores {
                 }
             });
 
-            request.on("doneInProc", () => {
+            request.on('doneInProc', () => {
                 deferred.resolve(true);
             });
 
-            request.on("doneProc", () => {
+            request.on('doneProc', () => {
                 deferred.resolve(true);
             });
 
-            request.on("done", () =>{
+            request.on('done', () =>{
                 deferred.resolve(true);
-            })
+            });
 
             connection.execSql(request);
         });
 
-        connection.on("error", (error) => {
+        connection.on('error', (error) => {
             console.log(error);
             deferred.resolve(false);
         });

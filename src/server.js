@@ -3,6 +3,7 @@ const Coaches = require('./models/Coaches');
 
 const path = require('path');
 const multer = require('multer');
+
 const upload = multer();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -23,13 +24,16 @@ const create = async () => {
 
     app.use(upload.array());
     app.use(cookieParser());
-    app.use(session({ secret: "Your secret key" }));
+    app.use(session({ secret: 'Your secret key' }));
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'html');
 
     app.get('/', HealthTrackingController.show);
     app.post('/new', HealthTrackingController.new);
     app.post('/healthtracking/migrate', HealthTrackingController.migrate);
+    app.post('/healthtracking/question', HealthTrackingController.newQuestion);
+    app.post('/healthtracking/option', HealthTrackingController.newOption);
+    app.post('/healthtracking/question/delete', HealthTrackingController.deleteQuestion);
 
     app.get('/coach', CoachController.checkSignedInAsCoach, CoachController.show);
     app.get('/coach/login', CoachController.showLogin);

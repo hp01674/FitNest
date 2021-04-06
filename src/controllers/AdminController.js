@@ -1,36 +1,40 @@
-const Administrators = require("../models/Administrators");
+const Administrators = require('../models/Administrators');
+const Questions = require('../models/Questions');
 
 class AdminController {
     static checkSignedInAsAdmin(req, res, next) {
         if (req.session.admin) {
-            next(); //If session exists, proceed to page
+            next(); // If session exists, proceed to page
         } else {
-            var err = new Error("Not logged in!");
-            next(err); //Error, trying to access unauthorized page!
+            const err = new Error('Not logged in!');
+            next(err); // Error, trying to access unauthorized page!
         }
     }
 
     static async show(req, res) {
-        res.render('admin/show');
+        const questions = await  Questions.getAllQuestions();
+        res.render('admin/show', {
+            questions: questions
+        });
     }
 
     static showLogin(req, res) {
         res.render('admin/login', {
-            message: ""
+            message: ''
         });
     }
 
     static async login (req, res) {
         if (!req.body.username || !req.body.password) {
             res.render('admin/login', {
-                message: "Please enter both id and password"
+                message: 'Please enter both id and password'
             });
         } else {
 
             const user = {
                 username: req.body.username,
                 password: req.body.password
-            }
+            };
 
             const admin = await Administrators.login(user);
             console.log(admin);
@@ -39,7 +43,7 @@ class AdminController {
                 res.redirect('/admin');
             } else {
                 res.render('admin/login', {
-                    message: "Invalid credentials!"
+                    message: 'Invalid credentials!'
                 });
             }
         }
